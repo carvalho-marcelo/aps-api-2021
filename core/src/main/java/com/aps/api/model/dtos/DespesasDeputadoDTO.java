@@ -1,4 +1,4 @@
-package com.aps.api.model;
+package com.aps.api.model.dtos;
 
 import java.io.Serializable;
 

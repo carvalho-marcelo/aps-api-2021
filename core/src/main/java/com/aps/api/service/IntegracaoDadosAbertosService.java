@@ -1,5 +1,7 @@
 package com.aps.api.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageImpl;
@@ -8,12 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.aps.api.model.DeputadoDTO;
-import com.aps.api.model.DeputadoResumidoDTO;
-import com.aps.api.model.DespesasDeputadoDTO;
-import com.aps.api.model.ResultadoDTO;
-import com.aps.api.model.ResultadoListaDTO;
-import com.aps.api.model.comum.PaginacaoDTO;
+import com.aps.api.model.comum.ParametrosConsulta;
+import com.aps.api.model.dtos.DeputadoDTO;
+import com.aps.api.model.dtos.DeputadoResumidoDTO;
+import com.aps.api.model.dtos.DespesasDeputadoDTO;
+import com.aps.api.model.dtos.ResultadoDTO;
+import com.aps.api.model.dtos.ResultadoListaDTO;
 
 @Service
 public class IntegracaoDadosAbertosService {
@@ -21,15 +23,20 @@ public class IntegracaoDadosAbertosService {
 	@Autowired
 	private WebClient webClient;
 
-	public PageImpl<DeputadoResumidoDTO> recuperarDeputadosPeloNomePaginado(PaginacaoDTO<String> paginacaoDTO) {
+	public PageImpl<DeputadoResumidoDTO> recuperarDeputados(ParametrosConsulta params) {
 		ParameterizedTypeReference<ResultadoListaDTO<DeputadoResumidoDTO>> type = new ParameterizedTypeReference<ResultadoListaDTO<DeputadoResumidoDTO>>() {};
 		
 		ResultadoListaDTO<DeputadoResumidoDTO> deputados = this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/deputados/")
-						.queryParam("nome", paginacaoDTO.getFiltro())
-						.queryParam("pagina", paginacaoDTO.getNumeroPagina())
-						.queryParam("itens", paginacaoDTO.getQuantidadePorPagina())
+						.queryParamIfPresent("id", Optional.ofNullable(params.getId()))
+						.queryParamIfPresent("nome", Optional.ofNullable(params.getNome()))
+						.queryParamIfPresent("idLegislatura", Optional.ofNullable(params.getIdLegislatura()))
+						.queryParamIfPresent("siglaUf", Optional.ofNullable(params.getSiglaUf()))
+						.queryParamIfPresent("siglaPartido", Optional.ofNullable(params.getSiglaPartido()))
+						.queryParamIfPresent("siglaSexo", Optional.ofNullable(params.getSiglaSexo()))
+						.queryParamIfPresent("pagina", Optional.ofNullable(params.getPagina()))
+						.queryParamIfPresent("itens", Optional.ofNullable(params.getItens()))
 						.queryParam("ordem", "ASC")
 						.queryParam("ordenarPor", "nome")
 						.build())
@@ -37,11 +44,11 @@ public class IntegracaoDadosAbertosService {
 				.bodyToMono(type)
 				.block();
 		
-		Pageable paginacao = PageRequest.of(paginacaoDTO.getNumeroPagina(), paginacaoDTO.getQuantidadePorPagina());
+		Pageable paginacao = PageRequest.of(params.getPagina(), params.getItens());
 		return new PageImpl<DeputadoResumidoDTO>(deputados.getDados(), paginacao, deputados.getDados().size());
 	}
 
-	public ResultadoDTO<DeputadoDTO> recuperarDadosDoDeputado(Long id) {
+	public ResultadoDTO<DeputadoDTO> recuperarDeputadoDetalhado(Long id) {
 		ResultadoDTO<DeputadoDTO> deputado = this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/deputados/{id}")
@@ -53,13 +60,21 @@ public class IntegracaoDadosAbertosService {
 		return deputado;
 	}
 	
-	public ResultadoListaDTO<DespesasDeputadoDTO> recuperarDespesasDoDeputado(Long id) {
+	public ResultadoListaDTO<DespesasDeputadoDTO> recuperarDespesasDoDeputado(ParametrosConsulta params) {
 		ParameterizedTypeReference<ResultadoListaDTO<DespesasDeputadoDTO>> type = new ParameterizedTypeReference<ResultadoListaDTO<DespesasDeputadoDTO>>() {};
 		
 		ResultadoListaDTO<DespesasDeputadoDTO> despesas = this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/deputados/{id}/despesas")
-						.build(id))
+						.queryParamIfPresent("idLegislatura", Optional.ofNullable(params.getIdLegislatura()))
+						.queryParamIfPresent("ano", Optional.ofNullable(params.getAno()))
+						.queryParamIfPresent("mes", Optional.ofNullable(params.getMes()))
+						.queryParamIfPresent("cnpjCpfFornecedor", Optional.ofNullable(params.getCnpjCpfFornecedor()))
+						.queryParamIfPresent("pagina", Optional.ofNullable(params.getPagina()))
+						.queryParamIfPresent("itens", Optional.ofNullable(params.getItens()))
+						.queryParam("ordem", "ASC")
+						.queryParam("ordenarPor", "dataDocumento")
+						.build(params.getId()))
 				.retrieve()
 				.bodyToMono(type)
 				.block();
