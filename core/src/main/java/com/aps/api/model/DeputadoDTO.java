@@ -11,7 +11,7 @@ public class DeputadoDTO implements Serializable {
 	
 	private Long id;
 	private String nomeCivil;
-	private DeputadoUltimoStatusDTO deputadoUltimoStatus;
+	private DeputadoUltimoStatusDTO ultimoStatus;
 	private String cpf;
 	private String sexo;
 	private String dataNascimento;
