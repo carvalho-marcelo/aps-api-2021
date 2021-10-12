@@ -1,4 +1,4 @@
-package com.aps.api.model.dtos;
+package com.aps.api.model.comum;
 
 import java.io.Serializable;
 import java.util.ArrayList;

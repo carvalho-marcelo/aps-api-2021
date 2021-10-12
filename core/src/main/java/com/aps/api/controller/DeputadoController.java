@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aps.api.model.comum.ParametrosConsulta;
+import com.aps.api.model.comum.ResultadoListaDTO;
 import com.aps.api.model.dtos.DeputadoDTO;
 import com.aps.api.model.dtos.DeputadoResumidoDTO;
 import com.aps.api.model.dtos.DespesasDeputadoDTO;
-import com.aps.api.model.dtos.ResultadoDTO;
-import com.aps.api.model.dtos.ResultadoListaDTO;
 import com.aps.api.service.DeputadoService;
 
 @RestController
@@ -31,7 +30,7 @@ public class DeputadoController {
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultadoDTO<DeputadoDTO>> recuperarDetalhado(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<DeputadoDTO> recuperarDetalhado(@PathVariable(value = "id") Long id) {
 		return ResponseEntity.ok(service.recuperarDetalhado(id));
 	}
 	

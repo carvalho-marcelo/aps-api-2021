@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.aps.api.model.comum.ParametrosConsulta;
+import com.aps.api.model.comum.ResultadoDTO;
+import com.aps.api.model.comum.ResultadoListaDTO;
 import com.aps.api.model.dtos.DeputadoDTO;
 import com.aps.api.model.dtos.DeputadoResumidoDTO;
 import com.aps.api.model.dtos.DespesasDeputadoDTO;
-import com.aps.api.model.dtos.ResultadoDTO;
-import com.aps.api.model.dtos.ResultadoListaDTO;
+import com.aps.api.model.dtos.LegislaturaDTO;
 
 @Service
 public class IntegracaoDadosAbertosService {
@@ -48,7 +49,7 @@ public class IntegracaoDadosAbertosService {
 		return new PageImpl<DeputadoResumidoDTO>(deputados.getDados(), paginacao, deputados.getDados().size());
 	}
 
-	public ResultadoDTO<DeputadoDTO> recuperarDeputadoDetalhado(Long id) {
+	public DeputadoDTO recuperarDeputadoDetalhado(Long id) {
 		ResultadoDTO<DeputadoDTO> deputado = this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/deputados/{id}")
@@ -57,7 +58,7 @@ public class IntegracaoDadosAbertosService {
 				.bodyToMono(new ParameterizedTypeReference<ResultadoDTO<DeputadoDTO>>() {})
 				.block();
 		
-		return deputado;
+		return deputado.getDados();
 	}
 	
 	public ResultadoListaDTO<DespesasDeputadoDTO> recuperarDespesasDoDeputado(ParametrosConsulta params) {
@@ -81,5 +82,19 @@ public class IntegracaoDadosAbertosService {
 
 		return despesas;
 	}
-
+	
+	public LegislaturaDTO recuperarUltimaLegislatura() {
+		ResultadoListaDTO<LegislaturaDTO> legislatura = this.webClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.path("/legislaturas")
+						.queryParam("ordem", "DESC")
+						.queryParam("ordenarPor", "id")
+						.build())
+				.retrieve()
+				.bodyToMono(new ParameterizedTypeReference<ResultadoListaDTO<LegislaturaDTO>>() {})
+				.block();
+		
+		return legislatura.getDados().get(0);
+	}
+	
 }

@@ -5,11 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.aps.api.model.comum.ParametrosConsulta;
+import com.aps.api.model.comum.ResultadoListaDTO;
 import com.aps.api.model.dtos.DeputadoDTO;
 import com.aps.api.model.dtos.DeputadoResumidoDTO;
 import com.aps.api.model.dtos.DespesasDeputadoDTO;
-import com.aps.api.model.dtos.ResultadoDTO;
-import com.aps.api.model.dtos.ResultadoListaDTO;
 
 @Service
 public class DeputadoService {
@@ -21,7 +20,7 @@ public class DeputadoService {
 		return integracaoDadosAbertosService.recuperarDeputados(params);
 	}
 
-	public ResultadoDTO<DeputadoDTO> recuperarDetalhado(Long id) {
+	public DeputadoDTO recuperarDetalhado(Long id) {
 		return integracaoDadosAbertosService.recuperarDeputadoDetalhado(id);
 	}
 

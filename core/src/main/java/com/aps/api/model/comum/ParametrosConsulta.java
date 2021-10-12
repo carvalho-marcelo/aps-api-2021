@@ -1,6 +1,7 @@
 package com.aps.api.model.comum;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import lombok.Data;
 
@@ -12,12 +13,12 @@ public class ParametrosConsulta implements Serializable {
 	// filtros
 	private Long id;
 	private String nome;
-	private Long idLegislatura;
-	private String siglaUf;
-	private String siglaPartido;
+	private ArrayList<Long> idLegislatura;
+	private ArrayList<String> siglaUf;
+	private ArrayList<String> siglaPartido;
 	private String siglaSexo;
-	private Long ano;
-	private Long mes;
+	private ArrayList<Long> ano;
+	private ArrayList<Long> mes;
 	private String cnpjCpfFornecedor;
 	
 	// Paginacao
