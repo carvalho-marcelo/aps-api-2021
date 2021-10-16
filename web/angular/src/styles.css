@@ -25,7 +25,28 @@ body {
 }
 
 .content {
-    padding: 3rem;
+    padding: 2rem;
+}
+
+.header {
+    font-size: 10px;
+    background-color: #3d383a;
+    color: rgb(204, 127, 39);
+    padding: 10px;
+    opacity: 75%;
+}
+
+.header a {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.header h1 {
+    margin-left: 10px;
 }
 
 footer {
@@ -42,4 +63,15 @@ footer {
 
 .background-image hr {
     border-color: rgb(204, 127, 39);
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.align-center {
+    display: flex;
+    justify-content: center;
 }

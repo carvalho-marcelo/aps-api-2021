@@ -6,14 +6,15 @@ import { RippleModule } from 'primeng/ripple';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DividerModule } from 'primeng/divider';
-import { ConsultarDeputadoComponent } from './deputado/pages/consultar-deputado/consultar-deputado.component';
 import { GithubCornerModule } from './shared/components/github-corner/github-corner.module';
+import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        ConsultarDeputadoComponent
+        HomeComponent
     ],
     imports: [
         BrowserModule,
@@ -22,7 +23,8 @@ import { GithubCornerModule } from './shared/components/github-corner/github-cor
         RippleModule,
         CardModule,
         DividerModule,
-        GithubCornerModule
+        GithubCornerModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent],

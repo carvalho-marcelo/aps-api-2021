@@ -1,5 +1,6 @@
 package com.aps.api.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +28,30 @@ public class IntegracaoDadosAbertosService {
 	public PageImpl<DeputadoResumidoDTO> recuperarDeputados(ParametrosConsulta params) {
 		ParameterizedTypeReference<ResultadoListaDTO<DeputadoResumidoDTO>> type = new ParameterizedTypeReference<ResultadoListaDTO<DeputadoResumidoDTO>>() {};
 		
-		ResultadoListaDTO<DeputadoResumidoDTO> deputados = this.webClient.get()
-				.uri(uriBuilder -> uriBuilder
-						.path("/deputados/")
-						.queryParamIfPresent("id", Optional.ofNullable(params.getId()))
-						.queryParamIfPresent("nome", Optional.ofNullable(params.getNome()))
-						.queryParamIfPresent("idLegislatura", Optional.ofNullable(params.getIdLegislatura()))
-						.queryParamIfPresent("siglaUf", Optional.ofNullable(params.getSiglaUf()))
-						.queryParamIfPresent("siglaPartido", Optional.ofNullable(params.getSiglaPartido()))
-						.queryParamIfPresent("siglaSexo", Optional.ofNullable(params.getSiglaSexo()))
-						.queryParamIfPresent("pagina", Optional.ofNullable(params.getPagina()))
-						.queryParamIfPresent("itens", Optional.ofNullable(params.getItens()))
-						.queryParam("ordem", "ASC")
-						.queryParam("ordenarPor", "nome")
-						.build())
-				.retrieve()
-				.bodyToMono(type)
-				.block();
+		ResultadoListaDTO<DeputadoResumidoDTO> deputados = new ResultadoListaDTO<DeputadoResumidoDTO>();
+		deputados.setDados(new ArrayList<DeputadoResumidoDTO>());
+		int contador = 0;
+		for (int i = 0; i == deputados.getDados().size(); i+=500) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
+			contador++;
+			params.setPagina(contador);
+			deputados.getDados().addAll(this.webClient.get()
+					.uri(uriBuilder -> uriBuilder
+							.path("/deputados/")
+							.queryParamIfPresent("id", Optional.ofNullable(params.getId()))
+							.queryParamIfPresent("nome", Optional.ofNullable(params.getNome()))
+							.queryParamIfPresent("idLegislatura", Optional.ofNullable(params.getIdLegislatura()))
+							.queryParamIfPresent("siglaUf", Optional.ofNullable(params.getSiglaUf()))
+							.queryParamIfPresent("siglaPartido", Optional.ofNullable(params.getSiglaPartido()))
+							.queryParamIfPresent("siglaSexo", Optional.ofNullable(params.getSiglaSexo()))
+							.queryParamIfPresent("pagina", Optional.ofNullable(params.getPagina()))
+							.queryParamIfPresent("itens", Optional.ofNullable(params.getItens()))
+							.queryParam("ordem", "ASC")
+							.queryParam("ordenarPor", "nome")
+							.build())
+					.retrieve()
+					.bodyToMono(type)
+					.block().getDados());
+		}
 		
 		Pageable paginacao = PageRequest.of(params.getPagina(), params.getItens());
 		return new PageImpl<DeputadoResumidoDTO>(deputados.getDados(), paginacao, deputados.getDados().size());
@@ -87,6 +95,8 @@ public class IntegracaoDadosAbertosService {
 		ResultadoListaDTO<LegislaturaDTO> legislatura = this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/legislaturas")
+						.queryParam("pagina", 1)
+						.queryParam("itens", 1)
 						.queryParam("ordem", "DESC")
 						.queryParam("ordenarPor", "id")
 						.build())

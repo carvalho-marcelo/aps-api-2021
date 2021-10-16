@@ -1,1 +1,66 @@
-<p>consultar-deputado works!</p>
+<h1 class="title">
+    Consultar Deputado
+</h1>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-col-4">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="Digite o nome do deputado" [(ngModel)]="nomeDeputado" />
+        </span>
+    </div>
+    <div>
+        <button pButton pRipple type="button" label="Buscar" (click)="consultar()"></button>
+    </div>
+</div>
+
+<br />
+
+<p-table *ngIf="carregarLista" #dt [value]="deputados" dataKey="id" styleClass="p-datatable-gridlines" [rows]="10"
+    [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [loading]="loading">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            Lista de Deputados
+            <!-- <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+            </span> -->
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of cols" pSortableColumn={{col.field}} class={{col.class}}>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    {{col.header}}
+                    <p-sortIcon *ngIf="col.header != ''" field={{col.field}}></p-sortIcon>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-deputado>
+        <tr class="p-selectable-row">
+            <td>
+                <img src={{deputado.urlFoto}} onerror="this.onerror=null;this.src='https://www.carnival.com/_ui/responsive/ccl/assets/images/notfound_placeholder.svg';" width="48" style="vertical-align: middle" />
+                {{deputado.nome}}
+            </td>
+            <td>
+                {{deputado?.siglaPartido}}
+            </td>
+            <td>
+                {{deputado?.siglaUf}}
+            </td>
+            <td>
+                {{deputado?.email}}
+            </td>
+            <td style="text-align: center">
+                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-id-card" title="detalhar"></button>
+                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-wallet" title="gastos"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">Nenhum registro encontrado.</td>
+        </tr>
+    </ng-template>
+</p-table>
