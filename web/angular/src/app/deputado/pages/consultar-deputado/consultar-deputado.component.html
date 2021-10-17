@@ -1,5 +1,5 @@
 <h1 class="title">
-    Consultar Deputado
+    Consultar Deputado(a)
 </h1>
 
 <div class="p-fluid p-formgrid p-grid">
@@ -16,15 +16,12 @@
 
 <br />
 
-<p-table *ngIf="carregarLista" #dt [value]="deputados" dataKey="id" styleClass="p-datatable-gridlines" [rows]="10"
-    [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [loading]="loading">
+<p-table *ngIf="mostrarLista" #dt [value]="deputados" dataKey="id" styleClass="p-datatable-gridlines" [rows]="10"
+    [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [loading]="loading" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Total de {totalRecords} registros recuperados">
     <ng-template pTemplate="caption">
         <div class="table-header">
-            Lista de Deputados
-            <!-- <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
-            </span> -->
+            Lista de Deputados(as)
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -40,7 +37,9 @@
     <ng-template pTemplate="body" let-deputado>
         <tr class="p-selectable-row">
             <td>
-                <img src={{deputado.urlFoto}} onerror="this.onerror=null;this.src='https://www.carnival.com/_ui/responsive/ccl/assets/images/notfound_placeholder.svg';" width="48" style="vertical-align: middle" />
+                <img src={{deputado.urlFoto}}
+                    onerror="this.onerror=null;this.src='https://www.carnival.com/_ui/responsive/ccl/assets/images/notfound_placeholder.svg';"
+                    width="48" style="vertical-align: middle" />
                 {{deputado.nome}}
             </td>
             <td>
@@ -53,8 +52,10 @@
                 {{deputado?.email}}
             </td>
             <td style="text-align: center">
-                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-id-card" title="detalhar"></button>
-                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-wallet" title="gastos"></button>
+                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-id-card"
+                    title="detalhar"></button>
+                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-wallet" title="gastos"
+                    (click)="consultarGastos(deputado.id)"></button>
             </td>
         </tr>
     </ng-template>

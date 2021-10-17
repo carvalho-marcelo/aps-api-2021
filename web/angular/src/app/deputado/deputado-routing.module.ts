@@ -9,7 +9,7 @@ const routes: Routes = [
         component: ConsultarDeputadoComponent
     },
     {
-        path: 'gastos',
+        path: 'gastos/:id',
         component: ConsultarGastosComponent
     }
 ];

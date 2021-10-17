@@ -35,7 +35,7 @@ public class DeputadoController {
 		return ResponseEntity.ok(service.recuperarDetalhado(id));
 	}
 	
-	@GetMapping(value = "/despesas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/despesas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultadoListaDTO<DespesasDeputadoDTO>> recuperarDespesas(@RequestBody ParametrosConsulta params) {
 		return ResponseEntity.ok(service.recuperarDespesas(params));
 	}

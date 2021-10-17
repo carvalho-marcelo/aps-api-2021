@@ -31,7 +31,7 @@ public class IntegracaoDadosAbertosService {
 		ResultadoListaDTO<DeputadoResumidoDTO> deputados = new ResultadoListaDTO<DeputadoResumidoDTO>();
 		deputados.setDados(new ArrayList<DeputadoResumidoDTO>());
 		int contador = 0;
-		for (int i = 0; i == deputados.getDados().size(); i+=500) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
+		for (int i = 0; i == deputados.getDados().size(); i+=100) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
 			contador++;
 			params.setPagina(contador);
 			deputados.getDados().addAll(this.webClient.get()
@@ -72,7 +72,13 @@ public class IntegracaoDadosAbertosService {
 	public ResultadoListaDTO<DespesasDeputadoDTO> recuperarDespesasDoDeputado(ParametrosConsulta params) {
 		ParameterizedTypeReference<ResultadoListaDTO<DespesasDeputadoDTO>> type = new ParameterizedTypeReference<ResultadoListaDTO<DespesasDeputadoDTO>>() {};
 		
-		ResultadoListaDTO<DespesasDeputadoDTO> despesas = this.webClient.get()
+		ResultadoListaDTO<DespesasDeputadoDTO> despesas = new ResultadoListaDTO<DespesasDeputadoDTO>();
+		despesas.setDados(new ArrayList<DespesasDeputadoDTO>());
+		int contador = 0;
+		for (int i = 0; i == despesas.getDados().size(); i+=100) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
+			contador++;
+			params.setPagina(contador);
+			despesas.getDados().addAll(this.webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/deputados/{id}/despesas")
 						.queryParamIfPresent("idLegislatura", Optional.ofNullable(params.getIdLegislatura()))
@@ -86,7 +92,8 @@ public class IntegracaoDadosAbertosService {
 						.build(params.getId()))
 				.retrieve()
 				.bodyToMono(type)
-				.block();
+				.block().getDados());
+		}
 
 		return despesas;
 	}

@@ -6,7 +6,7 @@ import { Legislatura } from '../model/Legislatura';
 @Injectable()
 export class LegislaturaService {
 
-    public urlBase: string = 'http://localhost:8080/aps/legislatura';
+    private urlBase: string = 'http://localhost:8080/aps/legislatura';
 
     constructor(protected http: HttpClient) {
     }

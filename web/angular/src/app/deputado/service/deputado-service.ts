@@ -6,7 +6,7 @@ import { ParametrosConsulta } from "src/app/shared/model/ParametrosConsulta";
 @Injectable()
 export class DeputadoService {
 
-    public urlBase: string = 'http://localhost:8080/aps/deputado';
+    private urlBase: string = 'http://localhost:8080/aps/deputado';
 
     public httpOptionsJson = {
         headers: new HttpHeaders(
@@ -19,8 +19,16 @@ export class DeputadoService {
     constructor(protected http: HttpClient) {
     }
 
-    public recuperarPeloNomePaginado(paginacao: ParametrosConsulta): Observable<any> {
-        return this.http.post<any>(this.urlBase + '/buscar-paginado', paginacao, this.httpOptionsJson);
+    public recuperarPeloNomePaginado(params: ParametrosConsulta): Observable<any> {
+        return this.http.post<any>(this.urlBase + '/buscar-paginado', params, this.httpOptionsJson);
+    }
+
+    public recuperarDetalhado(id: number): Observable<any> {
+        return this.http.get<any>(this.urlBase + '/' + id);
+    }
+
+    public recuperarDespesas(params): Observable<any> {
+        return this.http.post<any>(this.urlBase + '/despesas', params, this.httpOptionsJson);
     }
 
 }

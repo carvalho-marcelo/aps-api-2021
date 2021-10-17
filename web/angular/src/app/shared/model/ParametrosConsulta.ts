@@ -12,6 +12,6 @@ export class ParametrosConsulta {
     public cnpjCpfFornecedor: string;
 
     // paginacao
-    public itens: number = 20;
+    public itens: number = 100;
     public pagina: number = 1;
 }

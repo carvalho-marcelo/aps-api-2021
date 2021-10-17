@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Legislatura } from 'src/app/legislatura/model/Legislatura';
 import { LegislaturaService } from 'src/app/legislatura/service/legislatura-service';
 import { ParametrosConsulta } from 'src/app/shared/model/ParametrosConsulta';
-import { Deputado } from '../../model/Deputado';
+import { DeputadoResumido } from '../../model/DeputadoResumido';
 import { DeputadoService } from '../../service/deputado-service';
 
 @Component({
@@ -14,13 +15,15 @@ export class ConsultarDeputadoComponent implements OnInit {
 
     nomeDeputado: string;
     legislatura: Legislatura;
-    deputados: Deputado[];
+    deputados: DeputadoResumido[];
     cols: any[];
     loading: boolean = true;
-    carregarLista: boolean = false;
+    mostrarLista: boolean = false;
 
     constructor(private legislaturaService: LegislaturaService,
-        private deputadoService: DeputadoService) { }
+        private deputadoService: DeputadoService,
+        private router: Router,
+        private route: ActivatedRoute) { }
 
     ngOnInit(): void {
         const isLegislaturaAtual = window.history.state.isLegislaturaAtual;
@@ -48,14 +51,12 @@ export class ConsultarDeputadoComponent implements OnInit {
         this.loading = true;
         let params = new ParametrosConsulta();
         params.nome = this.nomeDeputado;
-        params.itens = 500;
-        params.pagina = 1;
         
         if (this.legislatura) {
             params.idLegislatura.push(this.legislatura.id);
         }
 
-        this.carregarLista = true;
+        this.mostrarLista = true;
 
         console.log(params);
         this.deputadoService.recuperarPeloNomePaginado(params).subscribe(
@@ -65,9 +66,14 @@ export class ConsultarDeputadoComponent implements OnInit {
                 this.deputados = res.content;
             },
             error => {
+                this.loading = false;
                 console.log(error);
-            }
+            },
         );
+    }
+
+    consultarGastos(id: number): void {
+        this.router.navigate(['gastos/' + id], { relativeTo: this.route.parent })
     }
 
 }
