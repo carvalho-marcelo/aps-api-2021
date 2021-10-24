@@ -9,7 +9,7 @@
         <div class="p-grid">
             <div class="p-col-3">
                 <span>
-                    <img src={{deputado?.ultimoStatus?.urlFoto}}
+                    <img src={{deputado.ultimoStatus.urlFoto}}
                         onerror="this.onerror=null;this.src='https://www.carnival.com/_ui/responsive/ccl/assets/images/notfound_placeholder.svg';"
                         width="100%" height="100%" style="max-width: 150px;" />
                 </span>
@@ -26,15 +26,15 @@
                 <span>Escolaridade: </span>
             </div>
             <div class="p-d-flex p-flex-column p-col-6">
-                <span>{{deputado?.nomeCivil}}</span>
-                <span>{{deputado?.cpf | cpfCnpj}}</span>
-                <span>{{deputado?.ultimoStatus?.siglaPartido}}</span>
-                <span>{{deputado?.ultimoStatus?.situacao}}</span>
-                <span>{{deputado?.ultimoStatus?.email}}</span>
-                <span>{{deputado?.dataNascimento | date: 'dd/MM/yyyy'}}</span>
+                <span>{{deputado?.nomeCivil || '-'}}</span>
+                <span>{{deputado?.cpf || '-' | cpfCnpj}}</span>
+                <span>{{deputado?.ultimoStatus?.siglaPartido || '-'}}</span>
+                <span>{{deputado?.ultimoStatus?.situacao || '-'}}</span>
+                <span>{{deputado?.ultimoStatus?.email || '-'}}</span>
+                <span *ngIf="deputado?.dataNascimento">{{deputado?.dataNascimento | date: 'dd/MM/yyyy'}}</span><span *ngIf="!deputado?.dataNascimento">-</span>
                 <span *ngIf="deputado?.dataFalecimento">{{deputado?.dataFalecimento | date: 'dd/MM/yyyy'}}</span>
                 <span>{{deputado?.municipioNascimento}} - {{deputado?.ufNascimento}}</span>
-                <span>{{deputado?.escolaridade}}</span>
+                <span>{{deputado?.escolaridade || '-'}}</span>
             </div>
         </div>
     </p-card>
