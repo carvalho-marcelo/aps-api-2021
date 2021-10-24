@@ -43,7 +43,7 @@ export class ConsultarDeputadoComponent implements OnInit {
             { field: 'siglaPartido', header: 'Partido', class: 'p-col-2' },
             { field: 'siglaUf', header: 'UF', class: 'p-col-1' },
             { field: 'email', header: 'Email', class: 'p-col-4' },
-            { field: 'acoes', header: '', class: 'p-col-1' }
+            { field: 'acoes', header: 'Ações', class: 'p-col-1' }
         ];
     }
 

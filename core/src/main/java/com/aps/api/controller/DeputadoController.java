@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aps.api.model.comum.ParametrosConsulta;
 import com.aps.api.model.comum.ResultadoListaDTO;
+import com.aps.api.model.dtos.DenunciaDespesaDTO;
 import com.aps.api.model.dtos.DeputadoDTO;
 import com.aps.api.model.dtos.DeputadoResumidoDTO;
 import com.aps.api.model.dtos.DespesasDeputadoDTO;
@@ -38,6 +39,11 @@ public class DeputadoController {
 	@PostMapping(value = "/despesas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultadoListaDTO<DespesasDeputadoDTO>> recuperarDespesas(@RequestBody ParametrosConsulta params) {
 		return ResponseEntity.ok(service.recuperarDespesas(params));
+	}
+	
+	@PostMapping(value = "/denuncia-despesa", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DenunciaDespesaDTO> registrarDenunciaDespesa(@RequestBody DenunciaDespesaDTO denunciaDespesa) {
+		return ResponseEntity.ok(service.registrarDenunciaDespesa(denunciaDespesa));
 	}
 	
 }

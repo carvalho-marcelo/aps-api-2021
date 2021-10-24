@@ -29,7 +29,7 @@
             <th *ngFor="let col of cols" pSortableColumn={{col.field}} class={{col.class}}>
                 <div class="p-d-flex p-jc-between p-ai-center">
                     {{col.header}}
-                    <p-sortIcon *ngIf="col.header != ''" field={{col.field}}></p-sortIcon>
+                    <p-sortIcon *ngIf="col.field != 'acoes'" field={{col.field}}></p-sortIcon>
                 </div>
             </th>
         </tr>
@@ -52,8 +52,8 @@
                 {{deputado?.email}}
             </td>
             <td style="text-align: center">
-                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-id-card"
-                    title="detalhar"></button>
+                <!-- <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-id-card"
+                    title="detalhar"></button> -->
                 <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-wallet" title="gastos"
                     (click)="consultarGastos(deputado.id)"></button>
             </td>

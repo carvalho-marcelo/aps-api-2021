@@ -1,0 +1,36 @@
+<p-dialog [(visible)]="display" [draggable]="false" [resizable]="false">
+    <p-header>
+        Denunciar Gasto Indevido do Deputado(a) {{deputado?.ultimoStatus?.nome}}
+    </p-header>
+    <hr>
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="despesa">Despesa:</label>
+            <input id="despesa" type="text" pInputText [ngModel]="despesa?.tipoDespesa"
+                (ngModelChange)="despesa.tipoDespesa = $event" disabled />
+        </div>
+
+        <div class="p-field">
+            <label for="valor">Valor:</label>
+            <p-inputNumber [ngModel]="despesa?.valorDocumento" (ngModelChange)="despesa.valorDocumento = $event"
+                mode="currency" currency="BRL" locale="pt-BR" disabled></p-inputNumber>
+        </div>
+
+        <div class="p-field">
+            <label for="motivo">Motivo da Denúncia:</label>
+            <input id="motivo" type="text" pInputText maxlength="100" [(ngModel)]="motivo" />
+        </div>
+
+        <div class="p-field">
+            <label for="descricao">Descrição da Denúncia:</label>
+            <textarea style="resize: none" [rows]="5" [cols]="130" pInputTextarea maxlength="800" [(ngModel)]="descricao"></textarea>
+        </div>
+    </div>
+
+    <p-footer>
+        <button pButton type="button" label="Cancelar" class="p-button-danger p-mr-2" (click)="voltar()"></button>
+        <button pButton type="button" label="Denunciar" class="ui-button-success" (click)="denunciarGasto()"></button>
+    </p-footer>
+</p-dialog>
+
+<app-mensagem #appMensagem></app-mensagem>
