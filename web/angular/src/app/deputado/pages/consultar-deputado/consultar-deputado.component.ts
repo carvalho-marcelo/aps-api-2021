@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Legislatura } from 'src/app/legislatura/model/Legislatura';
-import { LegislaturaService } from 'src/app/legislatura/service/legislatura-service';
 import { ParametrosConsulta } from 'src/app/shared/model/ParametrosConsulta';
 import { DeputadoResumido } from '../../model/DeputadoResumido';
 import { DeputadoService } from '../../service/deputado-service';
@@ -14,29 +12,18 @@ import { DeputadoService } from '../../service/deputado-service';
 export class ConsultarDeputadoComponent implements OnInit {
 
     nomeDeputado: string;
-    legislatura: Legislatura;
+    idLegislatura: number;
     deputados: DeputadoResumido[];
     cols: any[];
     loading: boolean = true;
     mostrarLista: boolean = false;
 
-    constructor(private legislaturaService: LegislaturaService,
-        private deputadoService: DeputadoService,
+    constructor(private deputadoService: DeputadoService,
         private router: Router,
         private route: ActivatedRoute) { }
 
     ngOnInit(): void {
-        const isLegislaturaAtual = window.history.state.isLegislaturaAtual;
-        if (isLegislaturaAtual) {
-            this.legislaturaService.recuperarUltimaLegislatura().subscribe(
-                res => {
-                    this.legislatura = res;
-                },
-                error => {
-                    console.log(error);
-                }
-            );
-        }
+        this.idLegislatura = this.route.snapshot.params.idLegislatura;
 
         this.cols = [
             { field: 'nome', header: 'Nome', class: 'p-col-4' },
@@ -52,8 +39,8 @@ export class ConsultarDeputadoComponent implements OnInit {
         let params = new ParametrosConsulta();
         params.nome = this.nomeDeputado;
         
-        if (this.legislatura) {
-            params.idLegislatura.push(this.legislatura.id);
+        if (this.idLegislatura) {
+            params.idLegislatura.push(this.idLegislatura);
         }
 
         this.mostrarLista = true;

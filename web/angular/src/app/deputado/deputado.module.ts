@@ -11,7 +11,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
-import { LegislaturaService } from '../legislatura/service/legislatura-service';
 import { MensagemModule } from '../shared/components/mensagem/mensagem.module';
 import { PipesModule } from '../shared/util/pipes/pipes.module';
 import { DeputadoRoutingModule } from './deputado-routing.module';
@@ -41,7 +40,6 @@ registerLocaleData(ptBr);
         MensagemModule
     ],
     providers: [
-        LegislaturaService,
         DeputadoService,
         { provide: LOCALE_ID, useValue: 'pt' }
     ]

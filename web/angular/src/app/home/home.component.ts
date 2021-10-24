@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Legislatura } from '../legislatura/model/Legislatura';
+import { LegislaturaService } from '../legislatura/service/legislatura-service';
 
 @Component({
     selector: 'app-home',
@@ -8,14 +10,29 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+    legislatura: Legislatura;
+
     constructor(private router: Router,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute,
+        private legislaturaService: LegislaturaService) { }
 
     ngOnInit(): void {
+        this.legislaturaService.recuperarUltimaLegislatura().subscribe(
+            res => {
+                this.legislatura = res;
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     mudarTelaConsultaDeputado(isLegislaturaAtual: boolean): void {
-        this.router.navigate(['deputado'], { relativeTo: this.route.parent, state: {isLegislaturaAtual: isLegislaturaAtual} })
+        if (isLegislaturaAtual) {
+            this.router.navigate([this.legislatura.id + '/deputado'], { relativeTo: this.route.parent })
+        } else {
+            this.router.navigate(['deputado'], { relativeTo: this.route.parent })
+        }
     }
 
 }
