@@ -9,6 +9,8 @@ import { DividerModule } from 'primeng/divider';
 import { GithubCornerModule } from './shared/components/github-corner/github-corner.module';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LegislaturaService } from './legislatura/service/legislatura-service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,9 +26,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         CardModule,
         DividerModule,
         GithubCornerModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [LegislaturaService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
