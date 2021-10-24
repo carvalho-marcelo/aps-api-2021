@@ -31,7 +31,7 @@ public class IntegracaoDadosAbertosService {
 		ResultadoListaDTO<DeputadoResumidoDTO> deputados = new ResultadoListaDTO<DeputadoResumidoDTO>();
 		deputados.setDados(new ArrayList<DeputadoResumidoDTO>());
 		int contador = 0;
-		for (int i = 0; i == deputados.getDados().size(); i+=100) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
+		for (int i = 0; i == deputados.getDados().size(); i+=500) { // loop para garantir que todos os dados sejam recuperados mesmo com o limite imposto na api
 			contador++;
 			params.setPagina(contador);
 			deputados.getDados().addAll(this.webClient.get()

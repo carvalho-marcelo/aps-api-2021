@@ -8,7 +8,7 @@ import { environment } from "src/environments/environment";
 @Injectable()
 export class DeputadoService {
 
-    private urlBase: string = `${environment.url}/deputado`;
+    private urlBase: string = `${environment.base_url}/deputado`;
 
     public httpOptionsJson = {
         headers: new HttpHeaders(
