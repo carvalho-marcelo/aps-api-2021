@@ -87,7 +87,7 @@ public class IntegracaoDadosAbertosService {
 						.queryParamIfPresent("cnpjCpfFornecedor", Optional.ofNullable(params.getCnpjCpfFornecedor()))
 						.queryParamIfPresent("pagina", Optional.ofNullable(params.getPagina()))
 						.queryParamIfPresent("itens", Optional.ofNullable(params.getItens()))
-						.queryParam("ordem", "ASC")
+						.queryParam("ordem", "DESC")
 						.queryParam("ordenarPor", "dataDocumento")
 						.build(params.getId()))
 				.retrieve()
