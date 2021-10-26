@@ -37,6 +37,7 @@ export class ConsultarDeputadoComponent implements OnInit {
     consultar(): void {
         this.loading = true;
         let params = new ParametrosConsulta();
+        params.itens = 500;
         params.nome = this.nomeDeputado;
         
         if (this.idLegislatura) {
