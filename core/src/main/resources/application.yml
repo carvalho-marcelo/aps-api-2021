@@ -3,19 +3,8 @@ server:
    servlet:
       contextPath: /aps
 spring:
-<<<<<<< Updated upstream
-  application:
-    name: aps
-  datasource:
-    url: ${JDBC_DATASOURCE_URL}
-  jpa:
-    show-sql: true
-    generate-ddl: true
-      
-=======
    application:
       name: aps
    profiles:
-      active: dev
+      active: prod
       
->>>>>>> Stashed changes
