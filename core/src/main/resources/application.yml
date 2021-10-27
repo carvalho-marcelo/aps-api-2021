@@ -2,9 +2,9 @@
 server:
    port: 8080
    servlet:
-    contextPath: /aps
-
+      contextPath: /aps
 spring:
+<<<<<<< Updated upstream
   application:
     name: aps
   datasource:
@@ -19,3 +19,10 @@ spring:
     hibernate:
       ddl-auto: none
       
+=======
+   application:
+      name: aps
+   profiles:
+      active: dev
+      
+>>>>>>> Stashed changes
