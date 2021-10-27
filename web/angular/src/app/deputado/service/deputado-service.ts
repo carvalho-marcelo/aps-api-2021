@@ -3,11 +3,12 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ParametrosConsulta } from "src/app/shared/model/ParametrosConsulta";
 import { DenunciaDespesa } from "../model/DenunciaDespesa";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class DeputadoService {
 
-    private urlBase: string = 'http://localhost:8080/aps/deputado';
+    private urlBase: string = `${environment.base_url}/deputado`;
 
     public httpOptionsJson = {
         headers: new HttpHeaders(
