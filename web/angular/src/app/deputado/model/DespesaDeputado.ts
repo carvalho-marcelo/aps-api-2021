@@ -1,4 +1,4 @@
-export class DespesasDeputado {
+export class DespesaDeputado {
     public ano: number;
 	public mes: number;
 	public tipoDespesa: string;

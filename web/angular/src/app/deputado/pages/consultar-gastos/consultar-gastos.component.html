@@ -9,7 +9,7 @@
         <div class="p-grid">
             <div class="p-col-3">
                 <span>
-                    <img src={{deputado?.ultimoStatus?.urlFoto}}
+                    <img src={{deputado.ultimoStatus.urlFoto}}
                         onerror="this.onerror=null;this.src='https://www.carnival.com/_ui/responsive/ccl/assets/images/notfound_placeholder.svg';"
                         width="100%" height="100%" style="max-width: 150px;" />
                 </span>
@@ -26,15 +26,15 @@
                 <span>Escolaridade: </span>
             </div>
             <div class="p-d-flex p-flex-column p-col-6">
-                <span>{{deputado?.nomeCivil}}</span>
-                <span>{{deputado?.cpf | cpfCnpj}}</span>
-                <span>{{deputado?.ultimoStatus?.siglaPartido}}</span>
-                <span>{{deputado?.ultimoStatus?.situacao}}</span>
-                <span>{{deputado?.ultimoStatus?.email}}</span>
-                <span>{{deputado?.dataNascimento | date: 'dd/MM/yyyy'}}</span>
+                <span>{{deputado?.nomeCivil || '-'}}</span>
+                <span>{{deputado?.cpf || '-' | cpfCnpj}}</span>
+                <span>{{deputado?.ultimoStatus?.siglaPartido || '-'}}</span>
+                <span>{{deputado?.ultimoStatus?.situacao || '-'}}</span>
+                <span>{{deputado?.ultimoStatus?.email || '-'}}</span>
+                <span *ngIf="deputado?.dataNascimento">{{deputado?.dataNascimento | date: 'dd/MM/yyyy'}}</span><span *ngIf="!deputado?.dataNascimento">-</span>
                 <span *ngIf="deputado?.dataFalecimento">{{deputado?.dataFalecimento | date: 'dd/MM/yyyy'}}</span>
                 <span>{{deputado?.municipioNascimento}} - {{deputado?.ufNascimento}}</span>
-                <span>{{deputado?.escolaridade}}</span>
+                <span>{{deputado?.escolaridade || '-'}}</span>
             </div>
         </div>
     </p-card>
@@ -84,7 +84,7 @@
             <th *ngFor="let col of cols" pSortableColumn={{col.field}} class={{col.class}}>
                 <div class="p-d-flex p-jc-between p-ai-center">
                     {{col.header}}
-                    <p-sortIcon *ngIf="col.field != 'notaFiscal'" field={{col.field}}></p-sortIcon>
+                    <p-sortIcon *ngIf="col.field != 'notaFiscal' && col.field != 'acoes'" field={{col.field}}></p-sortIcon>
                 </div>
             </th>
         </tr>
@@ -107,11 +107,16 @@
                 {{despesa?.valorLiquido | currency : 'BRL'}}
             </td>
             <td style="text-align: center">
-                <a style="color: inherit; text-decoration: none;" href={{despesa?.urlDocumento}} target="_blank"
+                <a *ngIf="despesa?.urlDocumento" style="color: inherit; text-decoration: none;" href={{despesa?.urlDocumento}} target="_blank"
                     rel="noneferrer">
                     <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-file-o"
                         title="Recibo"></button>
                 </a>
+                <span *ngIf="!despesa?.urlDocumento">Indisponível</span>
+            </td>
+            <td style="text-align: center">
+                <button pButton type="button" class="p-button-secondary p-mr-2" icon="pi pi-exclamation-triangle" title="denunciar gasto"
+                    (click)="abrirModalDenunciarGasto(despesa)"></button>
             </td>
         </tr>
     </ng-template>
@@ -121,3 +126,5 @@
         </tr>
     </ng-template>
 </p-table>
+
+<app-modal-denuncia-gasto #modalDenuncia [deputado]="deputado"></app-modal-denuncia-gasto>
