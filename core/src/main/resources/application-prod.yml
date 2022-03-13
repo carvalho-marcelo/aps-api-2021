@@ -1,0 +1,12 @@
+
+server:
+   servlet:
+      contextPath: /aps
+spring:
+   application:
+      name: aps
+   datasource:
+      url: ${JDBC_DATASOURCE_URL}
+   jpa:
+      show-sql: true
+      generate-ddl: true

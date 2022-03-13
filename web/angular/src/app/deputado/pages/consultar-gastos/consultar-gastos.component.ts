@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParametrosConsulta } from 'src/app/shared/model/ParametrosConsulta';
 import { Deputado } from '../../model/Deputado';
-import { DespesasDeputado } from '../../model/DespesasDeputado';
+import { DespesaDeputado } from '../../model/DespesaDeputado';
 import { DeputadoService } from '../../service/deputado-service';
+import { ModalDenunciaGastoComponent } from '../modal-denuncia-gasto/modal-denuncia-gasto.component';
 
 @Component({
     selector: 'app-consultar-gastos',
@@ -13,7 +14,7 @@ import { DeputadoService } from '../../service/deputado-service';
 export class ConsultarGastosComponent implements OnInit {
 
     deputado: Deputado;
-    despesas: DespesasDeputado;
+    despesas: DespesaDeputado;
     loading: boolean = true;
     cols: any[];
     params: ParametrosConsulta;
@@ -23,6 +24,8 @@ export class ConsultarGastosComponent implements OnInit {
     anos: number[] = [];
     anosSelecionados: number[] = [];
 
+    @ViewChild('modalDenuncia') appModalDenuncia: ModalDenunciaGastoComponent;
+
     constructor(private deputadoService: DeputadoService,
         private route: ActivatedRoute) {
             for (let i = 1; i <= 12; i++) {
@@ -30,7 +33,7 @@ export class ConsultarGastosComponent implements OnInit {
             }
 
             const anoAtual = new Date().getFullYear();
-            for (let i = 2010; i <= anoAtual; i++) {
+            for (let i = 2008; i <= anoAtual; i++) {
                 this.anos.push(i);
             }
         }
@@ -64,11 +67,12 @@ export class ConsultarGastosComponent implements OnInit {
 
         this.cols = [
             { field: 'nomeFornecedor', header: 'Fornecedor', class: 'p-col-4' },
-            { field: 'tipoDespesa', header: 'Despesa', class: 'p-col-4' },
+            { field: 'tipoDespesa', header: 'Despesa', class: 'p-col-3' },
             { field: 'dataDocumento', header: 'Data', class: 'p-col-1' },
             { field: 'valorDocumento', header: 'Valor', class: 'p-col-1' },
             { field: 'valorLiquido', header: 'Valor Liquido', class: 'p-col-1' },
-            { field: 'notaFiscal', header: 'Nota Fiscal', class: 'p-col-1' }
+            { field: 'notaFiscal', header: 'Nota Fiscal', class: 'p-col-1' },
+            { field: 'acoes', header: 'Ações', class: 'p-col-1' }
         ];
     }
 
@@ -93,6 +97,11 @@ export class ConsultarGastosComponent implements OnInit {
                 console.log(error);
             }
         )
+    }
+
+    abrirModalDenunciarGasto(despesa: DespesaDeputado): void {
+        this.appModalDenuncia.despesa = despesa;
+        this.appModalDenuncia.apresentarModal();
     }
 
 }

@@ -1,14 +1,18 @@
+import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DividerModule } from 'primeng/divider';
-import { GithubCornerModule } from './shared/components/github-corner/github-corner.module';
 import { HomeComponent } from './home/home.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LegislaturaService } from './legislatura/service/legislatura-service';
+import { GithubCornerModule } from './shared/components/github-corner/github-corner.module';
 
 
 @NgModule({
@@ -24,9 +28,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         CardModule,
         DividerModule,
         GithubCornerModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule,
+        ProgressSpinnerModule,
+        BlockUIModule
     ],
-    providers: [],
+    providers: [LegislaturaService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

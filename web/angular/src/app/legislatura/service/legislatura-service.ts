@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from 'src/environments/environment';
 import { Legislatura } from '../model/Legislatura';
 
 @Injectable()
 export class LegislaturaService {
 
-    private urlBase: string = 'http://localhost:8080/aps/legislatura';
+    private urlBase: string = `${environment.base_url}/legislatura`;
 
     constructor(protected http: HttpClient) {
     }

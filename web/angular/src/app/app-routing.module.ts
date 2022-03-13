@@ -11,6 +11,10 @@ const routes: Routes = [
     {
         path: 'deputado',
         loadChildren: () => DeputadoModule
+    },
+    {
+        path: ':idLegislatura/deputado',
+        loadChildren: () => DeputadoModule
     }
 ];
 

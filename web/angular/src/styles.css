@@ -33,7 +33,7 @@ body {
     background-color: #3d383a;
     color: rgb(204, 127, 39);
     padding: 10px;
-    opacity: 75%;
+    opacity: .75;
 }
 
 .header a {
@@ -74,4 +74,11 @@ footer {
 .align-center {
     display: flex;
     justify-content: center;
+}
+
+.progress-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
